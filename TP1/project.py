@@ -32,7 +32,6 @@ def ler_ficheiro():
     for lin in lines:
         toks = re.findall(corpo, lin)
 
-
     ## o ultimo token tem um \n, por isso no ficheiro de output fica na linha de baixo "false"
     ## -> retirar o \n com alguma funcao pre-definida
     for tok in tokens:
@@ -43,29 +42,9 @@ def ler_ficheiro():
             saida.write(str)
 
         saida.write("\t}\n")
-    
-        """
-        for l in lins:
-            saida.write("\t{\n")
-            for i in l.groups():
-                if i != None:
-                    str = "\t\t" + i + "\n"
-                    saida.write(str)
-        saida.write("\t}\n")
-        """
 
     saida.write("]")
     file.close()
     saida.close()
-    """
-    for tok in tokens:
-        #print(tok.group(1))
-
-
-    for line in lines:
-        toks = ccorpo.finditer(line)
-        #for t in toks:
-        #    print(t.group(0))
-    """
 
 ler_ficheiro()
