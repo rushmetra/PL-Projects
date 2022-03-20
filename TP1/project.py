@@ -3,7 +3,8 @@ import sys
 
 
 # REGEX
-cabecalho = r'([\wà-úÀ-Ú\/]+(\{\d(,\d)?\}(::[\wà-úÀ-Ú]+)?)?)'
+#cabecalho = r'([\wà-úÀ-Ú\/]+(\{\d(,\d)?\}(::[\wà-úÀ-Ú]+)?)?)'
+cabecalho = r'([^,]+)'
 cab = re.compile(cabecalho)
 #corpo = r'[\wà-úÀ-Ú-.@]+,?'
 #corpo = r'[\wà-úÀ-Ú-.,@]+'
@@ -23,7 +24,7 @@ def ler_ficheiro():
     file = open("myfile.txt",'r')
     saida = open("output.txt",'w')
     first_line = file.readline()
-    tokens = cab.finditer(first_line)
+    tokens = re.findall(cabecalho,first_line)
     lines = file.readlines()
     saida.write("[\n")
     index = 0
@@ -31,14 +32,16 @@ def ler_ficheiro():
     for lin in lines:
         toks = re.findall(corpo, lin)
 
+
+    ## o ultimo token tem um \n, por isso no ficheiro de output fica na linha de baixo "false"
+    ## -> retirar o \n com alguma funcao pre-definida
     for tok in tokens:
         saida.write("\t{\n")
         for tok in tokens:
-            for i in tok.groups():
-                if i != None:
-                    str = "\t\t" + i + ":" + toks[index] + "\n"
-                    index +=1
-                    saida.write(str)
+            str = "\t\t" + tok + ":" + toks[index] + "\n"
+            index += 1
+            saida.write(str)
+
         saida.write("\t}\n")
     
         """
