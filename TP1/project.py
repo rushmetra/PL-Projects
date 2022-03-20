@@ -3,42 +3,80 @@ import sys
 
 
 # REGEX
-#cabecalho = r'([\wà-úÀ-Ú\/]+(\{\d(,\d)?\}(::[\wà-úÀ-Ú]+)?)?)'
-cabecalho = r'([^,]+)'
-cab = re.compile(cabecalho)
-#corpo = r'[\wà-úÀ-Ú-.@]+,?'
-#corpo = r'[\wà-úÀ-Ú-.,@]+'
+cabecalho = r'([\wà-úÀ-Ú\/]+)({(\d),(\d)}|{(\d)})?((\:\:)([\wà-úÀ-Ú\/]+))?'
 
+#cabecalho = r'([^,]+)'
+cab = re.compile(cabecalho)
 
 corpo = r'([^,]+)'
 ccorpo = re.compile(corpo)
 
 
-#3162,Cândido Faísca,Teatro,12,13,14,,
-#7777,Cristiano Ronaldo,Desporto,17,12,20,11,12
-#264,Marcelo Sousa,Ciência Política,18,19,19,20,
-
 
 def ler_ficheiro():
-    file = open("myfile.txt",'r')
-    saida = open("output.txt",'w')
+    file = open("myfile2.txt",'r')
+    saida = open("output2.txt",'w')
     
     first_line = file.readline()
     lines = file.readlines()
     tokens = re.findall(cabecalho,first_line)
     
     saida.write("[\n")
+
+    print(tokens)
     
     for lin in lines:
         index = 0
         toks = re.findall(corpo, lin)
+        print(toks)
         saida.write("\t{\n")
         
         for tok in tokens:
-            str = "\t\t" + tok.rstrip('\n') + ":" + toks[index] + "\n"
-            index += 1
-            saida.write(str)
-        saida.write("\t},\n")
+            if not tok[1]: # input nao é lista
+                if index==(len(tokens) - 1):
+                    str = "\t\t" + '"' + tok[0].rstrip('\n')+ '"' + ": " + '"' + toks[index].rstrip('\n') + '"' + "\n"
+                else:
+                    str = "\t\t" + '"' + tok[0].rstrip('\n')+ '"' + ": " + '"' + toks[index].rstrip('\n') + '",' + "\n"
+                index += 1
+                saida.write(str)
+            else: # input é lista
+                # verificar chavetas
+                if not tok[4]:
+                    # {a,b}
+                    a = tok[2]
+                    b = tok[3]
+
+
+                else:
+                    # {a}
+                    a = tok[4]
+                    n = index + (int(a))
+                    i = index
+                    lista = []
+                    for index in range(i,n):
+                        lista.append(int(toks[index]))
+
+                # verificar se tem funcao
+                if not tok[7]:
+                    # nao tem funcao
+                    str = "\t\t" + '"' + tok[0].rstrip('\n')+ '"' + ": " + '['
+                    s = ",".join(lista)
+                    str += s +']' + "\n"
+                    print(str)
+                else:
+                    #tem funcao
+                    func = tok[7] ## sum
+                    globals()[func]()
+
+
+
+
+            saida.write(str)  
+
+        if lin==(lines[len(lines)-1]):
+            saida.write("\t}\n")
+        else:
+            saida.write("\t},\n")
     
     saida.write("]")
     file.close()

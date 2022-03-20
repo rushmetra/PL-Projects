@@ -1,0 +1,2 @@
+Número,Nome,Curso,Notas{5}::sum,,,,,
+3162,Cândido Faísca,Teatro,12,13,14,15,16
