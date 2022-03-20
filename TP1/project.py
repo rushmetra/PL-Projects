@@ -22,24 +22,24 @@ ccorpo = re.compile(corpo)
 def ler_ficheiro():
     file = open("myfile.txt",'r')
     saida = open("output.txt",'w')
+    
     first_line = file.readline()
-    tokens = re.findall(cabecalho,first_line)
     lines = file.readlines()
+    tokens = re.findall(cabecalho,first_line)
+    
     saida.write("[\n")
-    index = 0
-
+    
     for lin in lines:
+        index = 0
         toks = re.findall(corpo, lin)
-
-    for tok in tokens:
         saida.write("\t{\n")
+        
         for tok in tokens:
             str = "\t\t" + tok.rstrip('\n') + ":" + toks[index] + "\n"
             index += 1
             saida.write(str)
-
-        saida.write("\t}\n")
-
+        saida.write("\t},\n")
+    
     saida.write("]")
     file.close()
     saida.close()
