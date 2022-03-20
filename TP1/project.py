@@ -1,37 +1,64 @@
-import re, sys
+import re
+import sys
 
 
-# cabecalho = r'((?=,)?[\wà-úÀ-Ú]*(\{\d(,\d)?\}(:{2}(\w+))?)*)' 
-# cabecalho = r'[^,]+(:{2}(\w+))?(,*)?'   
-# cabecalho = r'([\wà-úÀ-Ú]+(\{\d(,\d)?\}(::(^\wà-úÀ-Ú]+))?)?)' # esta separa a função
-
-# Expressão regular para capturar o cabeçalho
+# REGEX
 cabecalho = r'([\wà-úÀ-Ú]+(\{\d(,\d)?\}(::[\wà-úÀ-Ú]+)?)?)'
 cab = re.compile(cabecalho)
-
-# Abertura do ficheiro
-file = open("emd.csv")
-
-# Lê a primeira linha do ficheiro (cabeçalho) e
-# Itera o match da RE para o tokens
-first_line = file.readline().rstrip()
-tokens = cab.finditer(first_line)
-# Imprime os grupos de tokens
-for tok in tokens:
-   print(tok.group(1))
-
-# Expressão regular para capturar o resto das linhas do ficheiro .csv
-corpo = r'[\wà-úÀ-Ú]+'
+#corpo = r'([\wà-úÀ-Ú-.@]+)'
+corpo = r'[\wà-úÀ-Ú-.@]+,?'
 ccorpo = re.compile(corpo)
 
 
+#3162,Cândido Faísca,Teatro,12,13,14,,
+#7777,Cristiano Ronaldo,Desporto,17,12,20,11,12
+#264,Marcelo Sousa,Ciência Política,18,19,19,20,
 
-'''
-lines = file.readlines()
-for line in lines:
-    teste = ccorpo.finditer(line)
-    for tes in teste:
-        print(tes.group(1))
-'''
 
-close("emd.csv")
+
+def ler_ficheiro():
+    file = open("myfile.txt",'r')
+    saida = open("output.txt",'w')
+    first_line = file.readline()
+    tokens = cab.finditer(first_line)
+    lines = file.readlines()
+    saida.write("[\n")
+    
+    for tok in tokens:
+        saida.write("\t{\n")
+        for tok in tokens:
+            for i in tok.groups():
+                if i != None:
+                    str = "\t\t" + i + "\n"
+                    saida.write(str)
+        saida.write("\t{\n")
+    
+    for lin in lines:
+        lins = cab.finditer(lin)
+        for l in lins:
+            saida.write("\t{\n")
+            for l in lins:
+                for i in l.groups():
+                    if i != None:
+                        str = "\t\t" + i + "\n"
+                        saida.write(str)
+            saida.write("\t{\n")
+
+
+    saida.write("]")
+    file.close()
+    saida.close()
+    """
+    for tok in tokens:
+        #print(tok.group(1))
+
+
+    for line in lines:
+        toks = ccorpo.finditer(line)
+        #for t in toks:
+        #    print(t.group(0))
+    """
+
+ler_ficheiro()
+
+
