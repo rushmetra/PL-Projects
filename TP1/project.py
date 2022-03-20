@@ -3,10 +3,13 @@ import sys
 
 
 # REGEX
-cabecalho = r'([\wà-úÀ-Ú]+(\{\d(,\d)?\}(::[\wà-úÀ-Ú]+)?)?)'
+cabecalho = r'([\wà-úÀ-Ú\/]+(\{\d(,\d)?\}(::[\wà-úÀ-Ú]+)?)?)'
 cab = re.compile(cabecalho)
-#corpo = r'([\wà-úÀ-Ú-.@]+)'
-corpo = r'[\wà-úÀ-Ú-.@]+,?'
+#corpo = r'[\wà-úÀ-Ú-.@]+,?'
+#corpo = r'[\wà-úÀ-Ú-.,@]+'
+
+
+corpo = r'([^,]+)'
 ccorpo = re.compile(corpo)
 
 
@@ -23,27 +26,30 @@ def ler_ficheiro():
     tokens = cab.finditer(first_line)
     lines = file.readlines()
     saida.write("[\n")
-    
+    index = 0
+
+    for lin in lines:
+        toks = re.findall(corpo, lin)
+
     for tok in tokens:
         saida.write("\t{\n")
         for tok in tokens:
             for i in tok.groups():
                 if i != None:
-                    str = "\t\t" + i + "\n"
+                    str = "\t\t" + i + ":" + toks[index] + "\n"
+                    index +=1
                     saida.write(str)
-        saida.write("\t{\n")
+        saida.write("\t}\n")
     
-    for lin in lines:
-        lins = cab.finditer(lin)
+        """
         for l in lins:
             saida.write("\t{\n")
-            for l in lins:
-                for i in l.groups():
-                    if i != None:
-                        str = "\t\t" + i + "\n"
-                        saida.write(str)
-            saida.write("\t{\n")
-
+            for i in l.groups():
+                if i != None:
+                    str = "\t\t" + i + "\n"
+                    saida.write(str)
+        saida.write("\t}\n")
+        """
 
     saida.write("]")
     file.close()
@@ -60,5 +66,3 @@ def ler_ficheiro():
     """
 
 ler_ficheiro()
-
-
