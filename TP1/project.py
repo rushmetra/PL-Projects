@@ -19,7 +19,6 @@ ccorpo = re.compile(corpo)
 #264,Marcelo Sousa,Ciência Política,18,19,19,20,
 
 
-
 def ler_ficheiro():
     file = open("myfile.txt",'r')
     saida = open("output.txt",'w')
@@ -37,7 +36,7 @@ def ler_ficheiro():
     for tok in tokens:
         saida.write("\t{\n")
         for tok in tokens:
-            str = "\t\t" + tok + ":" + toks[index] + "\n"
+            str = "\t\t" + tok.rstrip('\n') + ":" + toks[index] + "\n"
             index += 1
             saida.write(str)
 
