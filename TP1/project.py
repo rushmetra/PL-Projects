@@ -54,24 +54,21 @@ def ler_ficheiro():
                     i = index
                     lista = []
                     for index in range(i,n):
-                        lista.append(int(toks[index]))
+                        lista.append((toks[index]))
 
                 # verificar se tem funcao
                 if not tok[7]:
                     # nao tem funcao
                     str = "\t\t" + '"' + tok[0].rstrip('\n')+ '"' + ": " + '['
                     s = ",".join(lista)
+                    s= s[:-1]
                     str += s +']' + "\n"
-                    print(str)
+                    saida.write(str)
+                    #print(str)
                 else:
                     #tem funcao
                     func = tok[7] ## sum
-                    globals()[func]()
-
-
-
-
-            saida.write(str)  
+                    #globals()[func]()
 
         if lin==(lines[len(lines)-1]):
             saida.write("\t}\n")
