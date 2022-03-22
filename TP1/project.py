@@ -1,16 +1,31 @@
+from ast import Str
+from cgi import print_form
 import re
 import sys
+from unicodedata import numeric
 
 
 # REGEX
 cabecalho = r'([\wà-úÀ-Ú\/]+)({(\d),(\d)}|{(\d)})?((\:\:)([\wà-úÀ-Ú\/]+))?'
-
-#cabecalho = r'([^,]+)'
 cab = re.compile(cabecalho)
 
-corpo = r'([^,]+)'
+corpo = r'([^,\n]+)'
 ccorpo = re.compile(corpo)
 
+def verific_is_Num (string):
+    exp = r"\d+"
+    e = re.compile(exp)
+    t = re.findall(exp,string)
+    if t:
+        return t[0]==string
+    else:
+        return False
+
+def verific_list_is_Num(lista):
+    for i in lista:
+        if not verific_is_Num(i):
+            return False
+    return True
 
 
 def ler_ficheiro():
@@ -23,29 +38,33 @@ def ler_ficheiro():
     
     saida.write("[\n")
 
-    print(tokens)
     
     for lin in lines:
         index = 0
         toks = re.findall(corpo, lin)
-        print(toks)
+
         saida.write("\t{\n")
         
         for tok in tokens:
             if not tok[1]: # input nao é lista
-                if index==(len(tokens) - 1):
-                    str = "\t\t" + '"' + tok[0].rstrip('\n')+ '"' + ": " + '"' + toks[index].rstrip('\n') + '"' + "\n"
+                if verific_is_Num(toks[index]):
+                    if index==(len(tokens) - 1):
+                        STR = "\t\t" + '"' + tok[0].rstrip('\n')+ '"' + ": " +  toks[index].rstrip('\n') + "\n"
+                    else:
+                        STR = "\t\t" + '"' + tok[0].rstrip('\n')+ '"' + ": " + toks[index].rstrip('\n') + ',' + "\n"
                 else:
-                    str = "\t\t" + '"' + tok[0].rstrip('\n')+ '"' + ": " + '"' + toks[index].rstrip('\n') + '",' + "\n"
+                    if index==(len(tokens) - 1):
+                        STR = "\t\t" + '"' + tok[0].rstrip('\n')+ '"' + ": " + '"' + toks[index].rstrip('\n') + '"' + "\n"
+                    else:
+                        STR = "\t\t" + '"' + tok[0].rstrip('\n')+ '"' + ": " + '"' + toks[index].rstrip('\n') + '",' + "\n"
                 index += 1
-                saida.write(str)
+                saida.write(STR)
             else: # input é lista
                 # verificar chavetas
                 if not tok[4]:
                     # {a,b}
                     a = tok[2]
                     b = tok[3]
-
 
                 else:
                     # {a}
@@ -55,21 +74,33 @@ def ler_ficheiro():
                     lista = []
                     for index in range(i,n):
                         lista.append((toks[index]))
-
+                        
+                numeric= verific_list_is_Num(lista)
                 # verificar se tem funcao
                 if not tok[7]:
                     # nao tem funcao
-                    str = "\t\t" + '"' + tok[0].rstrip('\n')+ '"' + ": " + '['
-                    s = ",".join(lista)
-                    s= s[:-1]
-                    str += s +']' + "\n"
-                    saida.write(str)
-                    #print(str)
+                    if numeric:
+                        STR = "\t\t" + '"' + tok[0].rstrip('\n')+ '"' + ": " + '['
+                        s = ",".join(lista)
+                        STR += s +']' + "\n"
+                    else:
+                        STR = "\t\t" + '"' + tok[0].rstrip('\n')+ '"' + ": " + '["'
+                        s = '","'.join(lista)
+                        STR += s +'"]' + "\n"
+                    saida.write(STR)
                 else:
                     #tem funcao
-                    func = tok[7] ## sum
-                    #globals()[func]()
-
+                    if numeric:
+                        lista= list(map(int, lista))
+                    func = tok[7] 
+                    s=func + "(lista)"
+                    result=eval(s)
+                    if type(result) == int or type(result) == float:
+                            STR = "\t\t" + '"' + tok[0].rstrip('\n')+"_"+ func + '"' + ": " + str(result) + "\n"
+                    else:
+                        STR = "\t\t" + '"' + tok[0].rstrip('\n')+"_"+ func + '"' + ": " +'"'+ str(result) + '"'+ "\n"
+                    saida.write(STR)
+                    
         if lin==(lines[len(lines)-1]):
             saida.write("\t}\n")
         else:
