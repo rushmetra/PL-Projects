@@ -13,11 +13,11 @@ corpo = r'([^,\n]+)'
 ccorpo = re.compile(corpo)
 
 def verific_is_Num (string):
-    exp = r"\d+"
+    exp = r"(\d+(.\d+)?)"
     e = re.compile(exp)
     t = re.findall(exp,string)
     if t:
-        return t[0]==string
+        return t[0][0]==string
     else:
         return False
 
@@ -91,11 +91,12 @@ def ler_ficheiro():
                 else:
                     #tem funcao
                     if numeric:
-                        lista= list(map(int, lista))
+                        lista= list(map(float, lista))
                     func = tok[7] 
                     s=func + "(lista)"
                     result=eval(s)
                     if type(result) == int or type(result) == float:
+                            result = '%g'%(result)
                             STR = "\t\t" + '"' + tok[0].rstrip('\n')+"_"+ func + '"' + ": " + str(result) + "\n"
                     else:
                         STR = "\t\t" + '"' + tok[0].rstrip('\n')+"_"+ func + '"' + ": " +'"'+ str(result) + '"'+ "\n"

@@ -1,2 +1,2 @@
-Número,Nome,Curso,Notas{5}::len,,,,,
-3162,Cândido Faísca,Teatro,12,13,14,15,16
+Número,Nome,Curso,Notas{5},,,,,
+3162,Cândido Faísca,Teatro,12.2,13.2,14.2,15.2,16.1
