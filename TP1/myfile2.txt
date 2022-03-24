@@ -1,2 +1,4 @@
-Número,Nome,Curso,Notas{5},,,,,
-3162,Cândido Faísca,Teatro,12.2,13.2,14.2,15.2,16.1
+Número,Nome,Curso,Notas{3,6}::sum,,,,,,Campo
+3162,Cândido Faísca,Teatro,12,13,14,,,,ola
+7777,Cristiano Ronaldo,Desporto,17,12,20,11,12,15,hello
+264,Marcelo Sousa,Ciência Política,18,19,19,20,,,hi

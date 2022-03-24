@@ -2,6 +2,7 @@ from ast import Str
 from cgi import print_form
 import re
 import sys
+import os
 from unicodedata import numeric
 
 
@@ -9,11 +10,11 @@ from unicodedata import numeric
 cabecalho = r'([\wà-úÀ-Ú\/]+)({(\d),(\d)}|{(\d)})?((\:\:)([\wà-úÀ-Ú\/]+))?'
 cab = re.compile(cabecalho)
 
-corpo = r'([^,\n]+)'
+corpo = r'([^,\n]*)'
 ccorpo = re.compile(corpo)
 
 def verific_is_Num (string):
-    exp = r"(\d+(.\d+)?)"
+    exp = r"((\-|\+)?\d+(.\d+)?)"
     e = re.compile(exp)
     t = re.findall(exp,string)
     if t:
@@ -28,9 +29,7 @@ def verific_list_is_Num(lista):
     return True
 
 
-def ler_ficheiro():
-    file = open("myfile2.txt",'r')
-    saida = open("output2.txt",'w')
+def ler_ficheiro(file,saida):
     
     first_line = file.readline()
     lines = file.readlines()
@@ -38,26 +37,27 @@ def ler_ficheiro():
     
     saida.write("[\n")
 
-    
+    ## INDICE -> Avança quando acabar um tok
     for lin in lines:
         index = 0
+        indice = 0
         toks = re.findall(corpo, lin)
 
         saida.write("\t{\n")
         
         for tok in tokens:
             if not tok[1]: # input nao é lista
-                if verific_is_Num(toks[index]):
-                    if index==(len(tokens) - 1):
+                if verific_is_Num(toks[index]): # é numero
+                    if indice==(len(tokens) - 1):
                         STR = "\t\t" + '"' + tok[0].rstrip('\n')+ '"' + ": " +  toks[index].rstrip('\n') + "\n"
                     else:
                         STR = "\t\t" + '"' + tok[0].rstrip('\n')+ '"' + ": " + toks[index].rstrip('\n') + ',' + "\n"
-                else:
-                    if index==(len(tokens) - 1):
+                else: # Nao é numero
+                    if indice==(len(tokens) - 1):
                         STR = "\t\t" + '"' + tok[0].rstrip('\n')+ '"' + ": " + '"' + toks[index].rstrip('\n') + '"' + "\n"
                     else:
-                        STR = "\t\t" + '"' + tok[0].rstrip('\n')+ '"' + ": " + '"' + toks[index].rstrip('\n') + '",' + "\n"
-                index += 1
+                        STR = "\t\t" + '"' + tok[0].rstrip('\n')+ '"' + ": " + '"' + toks[index].rstrip('\n') + '"' + ',' + "\n"
+                index += 2
                 saida.write(STR)
             else: # input é lista
                 # verificar chavetas
@@ -65,7 +65,30 @@ def ler_ficheiro():
                     # {a,b}
                     a = tok[2]
                     b = tok[3]
+                    
+                    n = index + (int(a)) + 2
+                    maxIndex = index + (int(b)*2) - 1
+                    i = index
+                    lista = []
 
+                    for index in range(i,n,2):
+                        if toks[index]:
+                            lista.append(toks[index])
+                    
+                    i = (n+1)
+
+                    for index in range(i,maxIndex,2):
+                        if toks[index]:
+                            lista.append(toks[index])
+                        else:
+                            break
+                    
+                    if len(lista) != int(b):
+                        index += int(b) - len(lista)
+                    else:
+                        index += 2
+                    
+                    
                 else:
                     # {a}
                     a = tok[4]
@@ -74,19 +97,30 @@ def ler_ficheiro():
                     lista = []
                     for index in range(i,n):
                         lista.append((toks[index]))
+                        index += 1
                         
                 numeric= verific_list_is_Num(lista)
                 # verificar se tem funcao
                 if not tok[7]:
                     # nao tem funcao
                     if numeric:
-                        STR = "\t\t" + '"' + tok[0].rstrip('\n')+ '"' + ": " + '['
-                        s = ",".join(lista)
-                        STR += s +']' + "\n"
+                        if indice==(len(tokens) - 1):
+                            STR = "\t\t" + '"' + tok[0].rstrip('\n')+ '"' + ": " + '['
+                            s = ",".join(lista)
+                            STR += s +']' + "\n"
+                        else:
+                            STR = "\t\t" + '"' + tok[0].rstrip('\n')+ '"' + ": " + '['
+                            s = ",".join(lista)
+                            STR += s +']'+ ',' + "\n"
                     else:
-                        STR = "\t\t" + '"' + tok[0].rstrip('\n')+ '"' + ": " + '["'
-                        s = '","'.join(lista)
-                        STR += s +'"]' + "\n"
+                        if indice==(len(tokens) - 1):
+                            STR = "\t\t" + '"' + tok[0].rstrip('\n')+ '"' + ": " + '["'
+                            s = '","'.join(lista)
+                            STR += s +'"]' + "\n"
+                        else:
+                            STR = "\t\t" + '"' + tok[0].rstrip('\n')+ '"' + ": " + '["'
+                            s = '","'.join(lista)
+                            STR += s +'"]'+ ',' + "\n"
                     saida.write(STR)
                 else:
                     #tem funcao
@@ -97,11 +131,18 @@ def ler_ficheiro():
                     result=eval(s)
                     if type(result) == int or type(result) == float:
                             result = '%g'%(result)
-                            STR = "\t\t" + '"' + tok[0].rstrip('\n')+"_"+ func + '"' + ": " + str(result) + "\n"
+                            if indice==(len(tokens) - 1):
+                                STR = "\t\t" + '"' + tok[0].rstrip('\n')+"_"+ func + '"' + ": " + str(result) + "\n"
+                            else:
+                                    STR = "\t\t" + '"' + tok[0].rstrip('\n')+"_"+ func + '"' + ": " + str(result) + ',' + "\n"
                     else:
-                        STR = "\t\t" + '"' + tok[0].rstrip('\n')+"_"+ func + '"' + ": " +'"'+ str(result) + '"'+ "\n"
+                        if indice==(len(tokens) - 1):
+                            STR = "\t\t" + '"' + tok[0].rstrip('\n')+"_"+ func + '"' + ": " +'"'+ str(result) + '"'+ "\n"
+                        else:
+                            STR = "\t\t" + '"' + tok[0].rstrip('\n')+"_"+ func + '"' + ": " +'"'+ str(result) + '"'+  ',' + "\n"
                     saida.write(STR)
-                    
+            indice +=1            
+        
         if lin==(lines[len(lines)-1]):
             saida.write("\t}\n")
         else:
@@ -111,4 +152,23 @@ def ler_ficheiro():
     file.close()
     saida.close()
 
-ler_ficheiro()
+
+def main():
+    print("Choose the file to process, press 'q' to quit.")
+    for line in sys.stdin:
+        line = line.rstrip('\n')
+        if 'q' == line.rstrip():
+            break
+        filein = open(line,'r')
+        if not filein:
+            print("Invalid file, try again.")
+            break
+        else:
+            filename = os.path.splitext(line)[0]
+            filename += ".json"
+            fileout = open(filename,'w')
+            ler_ficheiro(filein,fileout)
+            print("Done, see you later!")
+            break
+
+main()
