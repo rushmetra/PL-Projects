@@ -13,18 +13,18 @@ cab = re.compile(cabecalho)
 corpo = r'([^,\n]*)'
 ccorpo = re.compile(corpo)
 
-def verific_is_Num (string):
-    exp = r"((\-|\+)?\d+(.\d+)?)"
-    e = re.compile(exp)
-    t = re.findall(exp,string)
+def checkNumber (string):
+    expNum = r"((\-|\+)?\d+(.\d+)?)"
+    e = re.compile(expNum)
+    t = re.findall(expNum,string)
     if t:
         return t[0][0]==string
     else:
         return False
 
-def verific_list_is_Num(lista):
+def checkListNumber(lista):
     for i in lista:
-        if not verific_is_Num(i):
+        if not checkNumber(i):
             return False
     return True
 
@@ -47,7 +47,7 @@ def ler_ficheiro(file,saida):
         
         for tok in tokens:
             if not tok[1]: # input nao é lista
-                if verific_is_Num(toks[index]): # é numero
+                if checkNumber(toks[index]): # é numero
                     if indice==(len(tokens) - 1):
                         STR = "\t\t" + '"' + tok[0].rstrip('\n')+ '"' + ": " +  toks[index].rstrip('\n') + "\n"
                     else:
@@ -99,7 +99,7 @@ def ler_ficheiro(file,saida):
                         lista.append((toks[index]))
                         index += 1
                         
-                numeric= verific_list_is_Num(lista)
+                numeric= checkListNumber(lista)
                 # verificar se tem funcao
                 if not tok[7]:
                     # nao tem funcao
