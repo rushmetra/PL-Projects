@@ -34,7 +34,6 @@ def ler_ficheiro(file,saida):
     first_line = file.readline()
     lines = file.readlines()
     tokens = re.findall(cabecalho,first_line)
-    
     saida.write("[\n")
 
     ## INDICE -> Avança quando acabar um tok
@@ -42,7 +41,7 @@ def ler_ficheiro(file,saida):
         index = 0
         indice = 0
         toks = re.findall(corpo, lin)
-
+        
         saida.write("\t{\n")
         
         for tok in tokens:
@@ -68,6 +67,7 @@ def ler_ficheiro(file,saida):
                     
                     n = index + (int(a)) + 2
                     maxIndex = index + (int(b)*2) - 1
+                    
                     i = index
                     lista = []
 
@@ -156,15 +156,17 @@ def ler_ficheiro(file,saida):
 def main():
     print("Choose the file to process, press 'q' to quit.")
     for line in sys.stdin:
-        line = line.rstrip('\n')
-        if 'q' == line.rstrip():
+        filename_in = "CSV/"
+        filename_in += line.rstrip('\n')
+        if 'q' == filename_in.rstrip():
             break
-        filein = open(line,'r')
+        filein = open(filename_in,'r')
         if not filein:
             print("Invalid file, try again.")
             break
         else:
-            filename = os.path.splitext(line)[0]
+            filename = "JSON/"
+            filename += os.path.splitext(line)[0]
             filename += ".json"
             fileout = open(filename,'w')
             ler_ficheiro(filein,fileout)
