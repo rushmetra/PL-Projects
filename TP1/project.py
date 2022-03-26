@@ -36,7 +36,6 @@ def ler_ficheiro(file,saida):
     tokens = re.findall(cabecalho,first_line)
     saida.write("[\n")
 
-    ## INDICE -> Avança quando acabar um tok
     for lin in lines:
         index = 0
         indice = 0
@@ -59,8 +58,8 @@ def ler_ficheiro(file,saida):
                 index += 2
                 saida.write(STR)
             else: # input é lista
-                # verificar chavetas
-                if not tok[4]:
+                
+                if not tok[4]: # verificar chavetas
                     # {a,b}
                     a = tok[2]
                     b = tok[3]
@@ -100,8 +99,8 @@ def ler_ficheiro(file,saida):
                         index += 1
                         
                 numeric= checkListNumber(lista)
-                # verificar se tem funcao
-                if not tok[7]:
+                
+                if not tok[7]: # verificar se tem funcao
                     # nao tem funcao
                     if numeric:
                         if indice==(len(tokens) - 1):
