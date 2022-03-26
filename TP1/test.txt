@@ -1,2 +1,0 @@
-Número,Nome,Curso,Notas{3,5}::media,,,,,
-Teste,danizao,teste,
