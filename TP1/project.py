@@ -36,7 +36,7 @@ def ler_ficheiro(file,saida):
     tokens = re.findall(cabecalho,first_line)
     saida.write("[\n")
 
-    ## INDICE -> Avança quando acabar um tok
+    
     for lin in lines:
         index = 0
         indice = 0
