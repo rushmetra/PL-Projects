@@ -1,6 +1,6 @@
 # PL-Projects
 
-2021/2022
+Pratical assignments for Language Processing 2021/2022 .
 
 ## Group members:    
 
