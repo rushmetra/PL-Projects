@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = "INIT PAL SIMB TOKENGramatica : LexLex : INIT PAL ListList : Literals Ignore TokensLiterals : INIT PAL '=' SIMBIgnore : INIT PAL '=' SIMBTokens : INIT PAL '=' ListTokensListTokens : '[' TOKEN ListTokens ']'ListTokens : ',' TOKENListTokens : "
+_lr_signature = "PAL SIMB TOKENGramatica : LexLex : '%' '%' PAL List DefsList : Literals Ignore TokensLiterals : '%' PAL '=' SIMBIgnore : '%' PAL '=' SIMBTokens : '%' PAL '=' ListTokensListTokens : '[' TOKEN ListTokens ']'ListTokens : ',' TOKENListTokens : Defs : Def DefsDefs : Def : SIMB PAL '{' TOKEN ',' PAL '}'Erro : '.'"
     
-_lr_action_items = {'INIT':([0,4,7,9,15,19,],[3,5,10,13,-4,-5,]),'$end':([1,2,6,12,18,20,24,26,],[0,-1,-2,-3,-9,-6,-8,-7,]),'PAL':([3,5,10,13,],[4,8,14,16,]),'=':([8,14,16,],[11,17,18,]),'SIMB':([11,17,],[15,19,]),'[':([18,23,],[21,21,]),',':([18,23,],[22,22,]),'TOKEN':([21,22,],[23,24,]),']':([23,24,25,26,],[-9,-8,26,-7,]),}
+_lr_action_items = {'%':([0,3,5,8,13,21,27,],[3,4,6,14,19,-4,-5,]),'$end':([1,2,7,10,11,16,18,26,29,34,35,37,],[0,-1,-11,-2,-11,-10,-3,-9,-6,-8,-12,-7,]),'PAL':([4,6,12,14,19,28,],[5,9,17,20,23,32,]),'SIMB':([7,11,15,18,24,26,29,34,35,37,],[12,12,21,-3,27,-9,-6,-8,-12,-7,]),'=':([9,20,23,],[15,24,26,]),'{':([17,],[22,]),'TOKEN':([22,30,31,],[25,33,34,]),',':([25,26,33,],[28,31,31,]),'[':([26,33,],[30,30,]),'}':([32,],[35,]),']':([33,34,36,37,],[-9,-8,37,-7,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'Gramatica':([0,],[1,]),'Lex':([0,],[2,]),'List':([4,],[6,]),'Literals':([4,],[7,]),'Ignore':([7,],[9,]),'Tokens':([9,],[12,]),'ListTokens':([18,23,],[20,25,]),}
+_lr_goto_items = {'Gramatica':([0,],[1,]),'Lex':([0,],[2,]),'List':([5,],[7,]),'Literals':([5,],[8,]),'Defs':([7,11,],[10,16,]),'Def':([7,11,],[11,11,]),'Ignore':([8,],[13,]),'Tokens':([13,],[18,]),'ListTokens':([26,33,],[29,36,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -28,12 +28,16 @@ del _lr_goto_items
 _lr_productions = [
   ("S' -> Gramatica","S'",1,None,None,None),
   ('Gramatica -> Lex','Gramatica',1,'p_gramatica','parser.py',5),
-  ('Lex -> INIT PAL List','Lex',3,'p_lex','parser.py',8),
-  ('List -> Literals Ignore Tokens','List',3,'p_list','parser.py',11),
-  ('Literals -> INIT PAL = SIMB','Literals',4,'p_literals','parser.py',15),
-  ('Ignore -> INIT PAL = SIMB','Ignore',4,'p_ignore','parser.py',18),
-  ('Tokens -> INIT PAL = ListTokens','Tokens',4,'p_tokens','parser.py',22),
-  ('ListTokens -> [ TOKEN ListTokens ]','ListTokens',4,'p_listtokens_with_value','parser.py',26),
-  ('ListTokens -> , TOKEN','ListTokens',2,'p_listtokens_one','parser.py',30),
-  ('ListTokens -> <empty>','ListTokens',0,'p_listtokens_empty','parser.py',34),
+  ('Lex -> % % PAL List Defs','Lex',5,'p_lex','parser.py',8),
+  ('List -> Literals Ignore Tokens','List',3,'p_list','parser.py',13),
+  ('Literals -> % PAL = SIMB','Literals',4,'p_literals','parser.py',17),
+  ('Ignore -> % PAL = SIMB','Ignore',4,'p_ignore','parser.py',21),
+  ('Tokens -> % PAL = ListTokens','Tokens',4,'p_tokens','parser.py',25),
+  ('ListTokens -> [ TOKEN ListTokens ]','ListTokens',4,'p_listtokens_with_value','parser.py',29),
+  ('ListTokens -> , TOKEN','ListTokens',2,'p_listtokens_one','parser.py',33),
+  ('ListTokens -> <empty>','ListTokens',0,'p_listtokens_empty','parser.py',37),
+  ('Defs -> Def Defs','Defs',2,'p_defs_varias','parser.py',40),
+  ('Defs -> <empty>','Defs',0,'p_defs_vazia','parser.py',44),
+  ('Def -> SIMB PAL { TOKEN , PAL }','Def',7,'p_def','parser.py',48),
+  ('Erro -> .','Erro',1,'p_erro','parser.py',52),
 ]
