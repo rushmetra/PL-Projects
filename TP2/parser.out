@@ -1,0 +1,252 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> Gramatica
+Rule 1     Gramatica -> Lex
+Rule 2     Lex -> INIT PAL List
+Rule 3     List -> Literals Ignore Tokens
+Rule 4     Literals -> INIT PAL = SIMB
+Rule 5     Ignore -> INIT PAL = SIMB
+Rule 6     Tokens -> INIT PAL = ListTokens
+Rule 7     ListTokens -> [ TOKEN ListTokens ]
+Rule 8     ListTokens -> , TOKEN
+Rule 9     ListTokens -> <empty>
+
+Terminals, with rules where they appear
+
+,                    : 8
+=                    : 4 5 6
+INIT                 : 2 4 5 6
+PAL                  : 2 4 5 6
+SIMB                 : 4 5
+TOKEN                : 7 8
+[                    : 7
+]                    : 7
+error                : 
+
+Nonterminals, with rules where they appear
+
+Gramatica            : 0
+Ignore               : 3
+Lex                  : 1
+List                 : 2
+ListTokens           : 6 7
+Literals             : 3
+Tokens               : 3
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . Gramatica
+    (1) Gramatica -> . Lex
+    (2) Lex -> . INIT PAL List
+
+    INIT            shift and go to state 3
+
+    Gramatica                      shift and go to state 1
+    Lex                            shift and go to state 2
+
+state 1
+
+    (0) S' -> Gramatica .
+
+
+
+state 2
+
+    (1) Gramatica -> Lex .
+
+    $end            reduce using rule 1 (Gramatica -> Lex .)
+
+
+state 3
+
+    (2) Lex -> INIT . PAL List
+
+    PAL             shift and go to state 4
+
+
+state 4
+
+    (2) Lex -> INIT PAL . List
+    (3) List -> . Literals Ignore Tokens
+    (4) Literals -> . INIT PAL = SIMB
+
+    INIT            shift and go to state 5
+
+    List                           shift and go to state 6
+    Literals                       shift and go to state 7
+
+state 5
+
+    (4) Literals -> INIT . PAL = SIMB
+
+    PAL             shift and go to state 8
+
+
+state 6
+
+    (2) Lex -> INIT PAL List .
+
+    $end            reduce using rule 2 (Lex -> INIT PAL List .)
+
+
+state 7
+
+    (3) List -> Literals . Ignore Tokens
+    (5) Ignore -> . INIT PAL = SIMB
+
+    INIT            shift and go to state 10
+
+    Ignore                         shift and go to state 9
+
+state 8
+
+    (4) Literals -> INIT PAL . = SIMB
+
+    =               shift and go to state 11
+
+
+state 9
+
+    (3) List -> Literals Ignore . Tokens
+    (6) Tokens -> . INIT PAL = ListTokens
+
+    INIT            shift and go to state 13
+
+    Tokens                         shift and go to state 12
+
+state 10
+
+    (5) Ignore -> INIT . PAL = SIMB
+
+    PAL             shift and go to state 14
+
+
+state 11
+
+    (4) Literals -> INIT PAL = . SIMB
+
+    SIMB            shift and go to state 15
+
+
+state 12
+
+    (3) List -> Literals Ignore Tokens .
+
+    $end            reduce using rule 3 (List -> Literals Ignore Tokens .)
+
+
+state 13
+
+    (6) Tokens -> INIT . PAL = ListTokens
+
+    PAL             shift and go to state 16
+
+
+state 14
+
+    (5) Ignore -> INIT PAL . = SIMB
+
+    =               shift and go to state 17
+
+
+state 15
+
+    (4) Literals -> INIT PAL = SIMB .
+
+    INIT            reduce using rule 4 (Literals -> INIT PAL = SIMB .)
+
+
+state 16
+
+    (6) Tokens -> INIT PAL . = ListTokens
+
+    =               shift and go to state 18
+
+
+state 17
+
+    (5) Ignore -> INIT PAL = . SIMB
+
+    SIMB            shift and go to state 19
+
+
+state 18
+
+    (6) Tokens -> INIT PAL = . ListTokens
+    (7) ListTokens -> . [ TOKEN ListTokens ]
+    (8) ListTokens -> . , TOKEN
+    (9) ListTokens -> .
+
+    [               shift and go to state 21
+    ,               shift and go to state 22
+    $end            reduce using rule 9 (ListTokens -> .)
+
+    ListTokens                     shift and go to state 20
+
+state 19
+
+    (5) Ignore -> INIT PAL = SIMB .
+
+    INIT            reduce using rule 5 (Ignore -> INIT PAL = SIMB .)
+
+
+state 20
+
+    (6) Tokens -> INIT PAL = ListTokens .
+
+    $end            reduce using rule 6 (Tokens -> INIT PAL = ListTokens .)
+
+
+state 21
+
+    (7) ListTokens -> [ . TOKEN ListTokens ]
+
+    TOKEN           shift and go to state 23
+
+
+state 22
+
+    (8) ListTokens -> , . TOKEN
+
+    TOKEN           shift and go to state 24
+
+
+state 23
+
+    (7) ListTokens -> [ TOKEN . ListTokens ]
+    (7) ListTokens -> . [ TOKEN ListTokens ]
+    (8) ListTokens -> . , TOKEN
+    (9) ListTokens -> .
+
+    [               shift and go to state 21
+    ,               shift and go to state 22
+    ]               reduce using rule 9 (ListTokens -> .)
+
+    ListTokens                     shift and go to state 25
+
+state 24
+
+    (8) ListTokens -> , TOKEN .
+
+    $end            reduce using rule 8 (ListTokens -> , TOKEN .)
+    ]               reduce using rule 8 (ListTokens -> , TOKEN .)
+
+
+state 25
+
+    (7) ListTokens -> [ TOKEN ListTokens . ]
+
+    ]               shift and go to state 26
+
+
+state 26
+
+    (7) ListTokens -> [ TOKEN ListTokens ] .
+
+    $end            reduce using rule 7 (ListTokens -> [ TOKEN ListTokens ] .)
+    ]               reduce using rule 7 (ListTokens -> [ TOKEN ListTokens ] .)
+
