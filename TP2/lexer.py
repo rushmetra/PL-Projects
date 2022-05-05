@@ -1,12 +1,13 @@
 import ply.lex as lex
 
-tokens = ['PAL','TOKEN','SIMB']
-literals = ['=','%','[',']',',','{','}','.']
+tokens = ['PAL','TOKEN','SIMB','PRECEDENCE']
+literals = ['+','-','*','/','=','%','_','[',']',',','{','}','.',':','(',')']
 
 t_ignore = " \t\n"
-t_PAL = r"[\w\.\(\)]+"
-t_TOKEN = r"\'\w+\'"
+t_PAL = r"[A-Za-z\.\(\)0-9]+"
+t_TOKEN = r"\'[^\']+\'"
 t_SIMB = r"\"[^\"]+\""
+t_PRECEDENCE = r"\((\'[^\']+\'\,)+(\'[^\']+\')+\)"
 
 
 def t_error(t):
