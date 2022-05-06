@@ -9,7 +9,6 @@ t_TOKEN = r"\'[^\']+\'"
 t_SIMB = r"\"[^\"]+\""
 t_PRECEDENCE = r"\((\'[^\']+\'\,)+(\'[^\']+\')+\)"
 
-
 def t_error(t):
     print('Caráter ilegal: ', t.value[0])
     t.lexer.skip(1)
