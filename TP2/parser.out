@@ -1,9 +1,5 @@
 Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
-Unused terminals:
-
-    NAOFUNCIONA
-
 Grammar
 
 Rule 0     S' -> Gramatica
@@ -18,8 +14,8 @@ Rule 8     ListTokens -> , TOKEN
 Rule 9     ListTokens -> <empty>
 Rule 10    Defs -> Def Defs
 Rule 11    Defs -> <empty>
-Rule 12    Def -> SIMB PAL { TOKEN , PAL }
-Rule 13    Erro -> _ PAL SIMB , PAL
+Rule 12    Def -> SIMB PAL { TOKEN , PAL Fim }
+Rule 13    Erro -> - PAL SIMB , PAL Fim )
 Rule 14    Yacc -> % % PAL Precedence Gramar Code
 Rule 15    Precedence -> % PAL = [ ListPrecedence ]
 Rule 16    ListPrecedence -> PRECEDENCE , ListPrecedence
@@ -31,45 +27,45 @@ Rule 21    Exp -> PAL Exp
 Rule 22    Exp -> TOKEN Exp
 Rule 23    Exp -> % PAL Exp
 Rule 24    Exp -> <empty>
-Rule 25    Id -> Atr Math ListAtr
+Rule 25    Id -> Atr Math ListAtr Fim
 Rule 26    Atr -> PAL [ Atr ]
 Rule 27    Atr -> PAL
 Rule 28    ListAtr -> Atr Math ListAtr
 Rule 29    ListAtr -> <empty>
-Rule 30    Math -> =
-Rule 31    Math -> +
-Rule 32    Math -> -
-Rule 33    Math -> *
-Rule 34    Math -> /
-Rule 35    Math -> _
-Rule 36    Math -> = +
-Rule 37    Math -> = -
-Rule 38    Math -> <empty>
-Rule 39    Code -> % % ListDefsCode
-Rule 40    ListDefsCode -> DefsCode ListDefsCode
-Rule 41    ListDefsCode -> <empty>
-Rule 42    DefsCode -> PAL PAL MathPAL :
-Rule 43    MathPAL -> Math PAL MathPAL
-Rule 44    MathPAL -> <empty>
+Rule 30    Fim -> )
+Rule 31    Fim -> <empty>
+Rule 32    Math -> =
+Rule 33    Math -> +
+Rule 34    Math -> -
+Rule 35    Math -> *
+Rule 36    Math -> /
+Rule 37    Math -> _
+Rule 38    Math -> = +
+Rule 39    Math -> = -
+Rule 40    Math -> <empty>
+Rule 41    Code -> % % ListDefsCode
+Rule 42    ListDefsCode -> DefsCode ListDefsCode
+Rule 43    ListDefsCode -> <empty>
+Rule 44    DefsCode -> PAL PAL Fim :
 
 Terminals, with rules where they appear
 
-%                    : 2 2 4 5 6 14 14 15 23 39 39
-*                    : 33
-+                    : 31 36
+%                    : 2 2 4 5 6 14 14 15 23 41 41
+)                    : 13 30
+*                    : 35
++                    : 33 38
 ,                    : 8 12 13 16
--                    : 32 37
-/                    : 34
-:                    : 20 42
-=                    : 4 5 6 15 30 36 37
-NAOFUNCIONA          : 
-PAL                  : 2 4 5 6 12 12 13 13 14 15 20 21 23 26 27 42 42 43
+-                    : 13 34 39
+/                    : 36
+:                    : 20 44
+=                    : 4 5 6 15 32 38 39
+PAL                  : 2 4 5 6 12 12 13 13 14 15 20 21 23 26 27 44 44
 PRECEDENCE           : 16
 SIMB                 : 4 5 12 13
 TOKEN                : 7 8 12 22
 [                    : 7 15 26
 ]                    : 7 15 26
-_                    : 13 35
+_                    : 37
 error                : 
 {                    : 12 20
 }                    : 12 20
@@ -80,9 +76,10 @@ Atr                  : 25 26 28
 Code                 : 14
 Def                  : 10
 Defs                 : 2 10
-DefsCode             : 40
+DefsCode             : 42
 Erro                 : 2
 Exp                  : 20 21 22 23
+Fim                  : 12 13 25 44
 Gramar               : 14 18
 Gramatica            : 0
 Id                   : 20
@@ -90,12 +87,11 @@ Ignore               : 3
 Lex                  : 1
 List                 : 2
 ListAtr              : 25 28
-ListDefsCode         : 39 40
+ListDefsCode         : 41 42
 ListPrecedence       : 15 16
 ListTokens           : 6 7
 Literals             : 3
-Math                 : 25 28 43
-MathPAL              : 42 43
+Math                 : 25 28
 Precedence           : 14
 Productions          : 18
 Tokens               : 3
@@ -196,9 +192,9 @@ state 11
     (2) Lex -> % % PAL List . Defs Erro
     (10) Defs -> . Def Defs
     (11) Defs -> .
-    (12) Def -> . SIMB PAL { TOKEN , PAL }
+    (12) Def -> . SIMB PAL { TOKEN , PAL Fim }
 
-    _               reduce using rule 11 (Defs -> .)
+    -               reduce using rule 11 (Defs -> .)
     SIMB            shift and go to state 18
 
     Defs                           shift and go to state 16
@@ -243,9 +239,9 @@ state 15
 state 16
 
     (2) Lex -> % % PAL List Defs . Erro
-    (13) Erro -> . _ PAL SIMB , PAL
+    (13) Erro -> . - PAL SIMB , PAL Fim )
 
-    _               shift and go to state 27
+    -               shift and go to state 27
 
     Erro                           shift and go to state 26
 
@@ -254,9 +250,9 @@ state 17
     (10) Defs -> Def . Defs
     (10) Defs -> . Def Defs
     (11) Defs -> .
-    (12) Def -> . SIMB PAL { TOKEN , PAL }
+    (12) Def -> . SIMB PAL { TOKEN , PAL Fim }
 
-    _               reduce using rule 11 (Defs -> .)
+    -               reduce using rule 11 (Defs -> .)
     SIMB            shift and go to state 18
 
     Def                            shift and go to state 17
@@ -264,7 +260,7 @@ state 17
 
 state 18
 
-    (12) Def -> SIMB . PAL { TOKEN , PAL }
+    (12) Def -> SIMB . PAL { TOKEN , PAL Fim }
 
     PAL             shift and go to state 29
 
@@ -302,7 +298,7 @@ state 22
 state 23
 
     (14) Yacc -> % % PAL Precedence Gramar . Code
-    (39) Code -> . % % ListDefsCode
+    (41) Code -> . % % ListDefsCode
 
     %               shift and go to state 35
 
@@ -337,7 +333,7 @@ state 26
 
 state 27
 
-    (13) Erro -> _ . PAL SIMB , PAL
+    (13) Erro -> - . PAL SIMB , PAL Fim )
 
     PAL             shift and go to state 39
 
@@ -346,12 +342,12 @@ state 28
 
     (10) Defs -> Def Defs .
 
-    _               reduce using rule 10 (Defs -> Def Defs .)
+    -               reduce using rule 10 (Defs -> Def Defs .)
 
 
 state 29
 
-    (12) Def -> SIMB PAL . { TOKEN , PAL }
+    (12) Def -> SIMB PAL . { TOKEN , PAL Fim }
 
     {               shift and go to state 40
 
@@ -361,7 +357,7 @@ state 30
     (3) List -> Literals Ignore Tokens .
 
     SIMB            reduce using rule 3 (List -> Literals Ignore Tokens .)
-    _               reduce using rule 3 (List -> Literals Ignore Tokens .)
+    -               reduce using rule 3 (List -> Literals Ignore Tokens .)
 
 
 state 31
@@ -402,7 +398,7 @@ state 34
 
 state 35
 
-    (39) Code -> % . % ListDefsCode
+    (41) Code -> % . % ListDefsCode
 
     %               shift and go to state 48
 
@@ -430,14 +426,14 @@ state 38
 
 state 39
 
-    (13) Erro -> _ PAL . SIMB , PAL
+    (13) Erro -> - PAL . SIMB , PAL Fim )
 
     SIMB            shift and go to state 49
 
 
 state 40
 
-    (12) Def -> SIMB PAL { . TOKEN , PAL }
+    (12) Def -> SIMB PAL { . TOKEN , PAL Fim }
 
     TOKEN           shift and go to state 50
 
@@ -513,12 +509,12 @@ state 47
 
 state 48
 
-    (39) Code -> % % . ListDefsCode
-    (40) ListDefsCode -> . DefsCode ListDefsCode
-    (41) ListDefsCode -> .
-    (42) DefsCode -> . PAL PAL MathPAL :
+    (41) Code -> % % . ListDefsCode
+    (42) ListDefsCode -> . DefsCode ListDefsCode
+    (43) ListDefsCode -> .
+    (44) DefsCode -> . PAL PAL Fim :
 
-    $end            reduce using rule 41 (ListDefsCode -> .)
+    $end            reduce using rule 43 (ListDefsCode -> .)
     PAL             shift and go to state 61
 
     ListDefsCode                   shift and go to state 59
@@ -526,14 +522,14 @@ state 48
 
 state 49
 
-    (13) Erro -> _ PAL SIMB . , PAL
+    (13) Erro -> - PAL SIMB . , PAL Fim )
 
     ,               shift and go to state 62
 
 
 state 50
 
-    (12) Def -> SIMB PAL { TOKEN . , PAL }
+    (12) Def -> SIMB PAL { TOKEN . , PAL Fim }
 
     ,               shift and go to state 63
 
@@ -548,7 +544,7 @@ state 51
     [               shift and go to state 65
     ,               shift and go to state 66
     SIMB            reduce using rule 9 (ListTokens -> .)
-    _               reduce using rule 9 (ListTokens -> .)
+    -               reduce using rule 9 (ListTokens -> .)
 
     ListTokens                     shift and go to state 64
 
@@ -583,7 +579,7 @@ state 55
 state 56
 
     (20) Productions -> PAL : Exp { . Id }
-    (25) Id -> . Atr Math ListAtr
+    (25) Id -> . Atr Math ListAtr Fim
     (26) Atr -> . PAL [ Atr ]
     (27) Atr -> . PAL
 
@@ -616,19 +612,19 @@ state 58
 
 state 59
 
-    (39) Code -> % % ListDefsCode .
+    (41) Code -> % % ListDefsCode .
 
-    $end            reduce using rule 39 (Code -> % % ListDefsCode .)
+    $end            reduce using rule 41 (Code -> % % ListDefsCode .)
 
 
 state 60
 
-    (40) ListDefsCode -> DefsCode . ListDefsCode
-    (40) ListDefsCode -> . DefsCode ListDefsCode
-    (41) ListDefsCode -> .
-    (42) DefsCode -> . PAL PAL MathPAL :
+    (42) ListDefsCode -> DefsCode . ListDefsCode
+    (42) ListDefsCode -> . DefsCode ListDefsCode
+    (43) ListDefsCode -> .
+    (44) DefsCode -> . PAL PAL Fim :
 
-    $end            reduce using rule 41 (ListDefsCode -> .)
+    $end            reduce using rule 43 (ListDefsCode -> .)
     PAL             shift and go to state 61
 
     DefsCode                       shift and go to state 60
@@ -636,21 +632,21 @@ state 60
 
 state 61
 
-    (42) DefsCode -> PAL . PAL MathPAL :
+    (44) DefsCode -> PAL . PAL Fim :
 
     PAL             shift and go to state 74
 
 
 state 62
 
-    (13) Erro -> _ PAL SIMB , . PAL
+    (13) Erro -> - PAL SIMB , . PAL Fim )
 
     PAL             shift and go to state 75
 
 
 state 63
 
-    (12) Def -> SIMB PAL { TOKEN , . PAL }
+    (12) Def -> SIMB PAL { TOKEN , . PAL Fim }
 
     PAL             shift and go to state 76
 
@@ -660,7 +656,7 @@ state 64
     (6) Tokens -> % PAL = ListTokens .
 
     SIMB            reduce using rule 6 (Tokens -> % PAL = ListTokens .)
-    _               reduce using rule 6 (Tokens -> % PAL = ListTokens .)
+    -               reduce using rule 6 (Tokens -> % PAL = ListTokens .)
 
 
 state 65
@@ -709,6 +705,7 @@ state 69
     /               reduce using rule 27 (Atr -> PAL .)
     _               reduce using rule 27 (Atr -> PAL .)
     PAL             reduce using rule 27 (Atr -> PAL .)
+    )               reduce using rule 27 (Atr -> PAL .)
     }               reduce using rule 27 (Atr -> PAL .)
     ]               reduce using rule 27 (Atr -> PAL .)
 
@@ -722,16 +719,16 @@ state 70
 
 state 71
 
-    (25) Id -> Atr . Math ListAtr
-    (30) Math -> . =
-    (31) Math -> . +
-    (32) Math -> . -
-    (33) Math -> . *
-    (34) Math -> . /
-    (35) Math -> . _
-    (36) Math -> . = +
-    (37) Math -> . = -
-    (38) Math -> .
+    (25) Id -> Atr . Math ListAtr Fim
+    (32) Math -> . =
+    (33) Math -> . +
+    (34) Math -> . -
+    (35) Math -> . *
+    (36) Math -> . /
+    (37) Math -> . _
+    (38) Math -> . = +
+    (39) Math -> . = -
+    (40) Math -> .
 
     =               shift and go to state 83
     +               shift and go to state 84
@@ -739,8 +736,9 @@ state 71
     *               shift and go to state 86
     /               shift and go to state 87
     _               shift and go to state 88
-    PAL             reduce using rule 38 (Math -> .)
-    }               reduce using rule 38 (Math -> .)
+    PAL             reduce using rule 40 (Math -> .)
+    )               reduce using rule 40 (Math -> .)
+    }               reduce using rule 40 (Math -> .)
 
     Math                           shift and go to state 82
 
@@ -753,51 +751,45 @@ state 72
 
 state 73
 
-    (40) ListDefsCode -> DefsCode ListDefsCode .
+    (42) ListDefsCode -> DefsCode ListDefsCode .
 
-    $end            reduce using rule 40 (ListDefsCode -> DefsCode ListDefsCode .)
+    $end            reduce using rule 42 (ListDefsCode -> DefsCode ListDefsCode .)
 
 
 state 74
 
-    (42) DefsCode -> PAL PAL . MathPAL :
-    (43) MathPAL -> . Math PAL MathPAL
-    (44) MathPAL -> .
-    (30) Math -> . =
-    (31) Math -> . +
-    (32) Math -> . -
-    (33) Math -> . *
-    (34) Math -> . /
-    (35) Math -> . _
-    (36) Math -> . = +
-    (37) Math -> . = -
-    (38) Math -> .
+    (44) DefsCode -> PAL PAL . Fim :
+    (30) Fim -> . )
+    (31) Fim -> .
 
-    :               reduce using rule 44 (MathPAL -> .)
-    =               shift and go to state 83
-    +               shift and go to state 84
-    -               shift and go to state 85
-    *               shift and go to state 86
-    /               shift and go to state 87
-    _               shift and go to state 88
-    PAL             reduce using rule 38 (Math -> .)
+    )               shift and go to state 90
+    :               reduce using rule 31 (Fim -> .)
 
-    MathPAL                        shift and go to state 89
-    Math                           shift and go to state 90
+    Fim                            shift and go to state 89
 
 state 75
 
-    (13) Erro -> _ PAL SIMB , PAL .
+    (13) Erro -> - PAL SIMB , PAL . Fim )
+    (30) Fim -> . )
+    (31) Fim -> .
 
-    %               reduce using rule 13 (Erro -> _ PAL SIMB , PAL .)
+  ! shift/reduce conflict for ) resolved as shift
+    )               shift and go to state 90
 
+  ! )               [ reduce using rule 31 (Fim -> .) ]
+
+    Fim                            shift and go to state 91
 
 state 76
 
-    (12) Def -> SIMB PAL { TOKEN , PAL . }
+    (12) Def -> SIMB PAL { TOKEN , PAL . Fim }
+    (30) Fim -> . )
+    (31) Fim -> .
 
-    }               shift and go to state 91
+    )               shift and go to state 90
+    }               reduce using rule 31 (Fim -> .)
 
+    Fim                            shift and go to state 92
 
 state 77
 
@@ -810,14 +802,14 @@ state 77
     ,               shift and go to state 66
     ]               reduce using rule 9 (ListTokens -> .)
 
-    ListTokens                     shift and go to state 92
+    ListTokens                     shift and go to state 93
 
 state 78
 
     (8) ListTokens -> , TOKEN .
 
     SIMB            reduce using rule 8 (ListTokens -> , TOKEN .)
-    _               reduce using rule 8 (ListTokens -> , TOKEN .)
+    -               reduce using rule 8 (ListTokens -> , TOKEN .)
     ]               reduce using rule 8 (ListTokens -> , TOKEN .)
 
 
@@ -836,7 +828,7 @@ state 80
 
     PAL             shift and go to state 69
 
-    Atr                            shift and go to state 93
+    Atr                            shift and go to state 94
 
 state 81
 
@@ -848,118 +840,133 @@ state 81
 
 state 82
 
-    (25) Id -> Atr Math . ListAtr
+    (25) Id -> Atr Math . ListAtr Fim
     (28) ListAtr -> . Atr Math ListAtr
     (29) ListAtr -> .
     (26) Atr -> . PAL [ Atr ]
     (27) Atr -> . PAL
 
+    )               reduce using rule 29 (ListAtr -> .)
     }               reduce using rule 29 (ListAtr -> .)
     PAL             shift and go to state 69
 
-    Atr                            shift and go to state 94
-    ListAtr                        shift and go to state 95
+    Atr                            shift and go to state 95
+    ListAtr                        shift and go to state 96
 
 state 83
 
-    (30) Math -> = .
-    (36) Math -> = . +
-    (37) Math -> = . -
+    (32) Math -> = .
+    (38) Math -> = . +
+    (39) Math -> = . -
 
-    PAL             reduce using rule 30 (Math -> = .)
-    }               reduce using rule 30 (Math -> = .)
-    +               shift and go to state 96
-    -               shift and go to state 97
+    PAL             reduce using rule 32 (Math -> = .)
+    )               reduce using rule 32 (Math -> = .)
+    }               reduce using rule 32 (Math -> = .)
+    +               shift and go to state 97
+    -               shift and go to state 98
 
 
 state 84
 
-    (31) Math -> + .
+    (33) Math -> + .
 
-    PAL             reduce using rule 31 (Math -> + .)
-    }               reduce using rule 31 (Math -> + .)
+    PAL             reduce using rule 33 (Math -> + .)
+    )               reduce using rule 33 (Math -> + .)
+    }               reduce using rule 33 (Math -> + .)
 
 
 state 85
 
-    (32) Math -> - .
+    (34) Math -> - .
 
-    PAL             reduce using rule 32 (Math -> - .)
-    }               reduce using rule 32 (Math -> - .)
+    PAL             reduce using rule 34 (Math -> - .)
+    )               reduce using rule 34 (Math -> - .)
+    }               reduce using rule 34 (Math -> - .)
 
 
 state 86
 
-    (33) Math -> * .
+    (35) Math -> * .
 
-    PAL             reduce using rule 33 (Math -> * .)
-    }               reduce using rule 33 (Math -> * .)
+    PAL             reduce using rule 35 (Math -> * .)
+    )               reduce using rule 35 (Math -> * .)
+    }               reduce using rule 35 (Math -> * .)
 
 
 state 87
 
-    (34) Math -> / .
+    (36) Math -> / .
 
-    PAL             reduce using rule 34 (Math -> / .)
-    }               reduce using rule 34 (Math -> / .)
+    PAL             reduce using rule 36 (Math -> / .)
+    )               reduce using rule 36 (Math -> / .)
+    }               reduce using rule 36 (Math -> / .)
 
 
 state 88
 
-    (35) Math -> _ .
+    (37) Math -> _ .
 
-    PAL             reduce using rule 35 (Math -> _ .)
-    }               reduce using rule 35 (Math -> _ .)
+    PAL             reduce using rule 37 (Math -> _ .)
+    )               reduce using rule 37 (Math -> _ .)
+    }               reduce using rule 37 (Math -> _ .)
 
 
 state 89
 
-    (42) DefsCode -> PAL PAL MathPAL . :
+    (44) DefsCode -> PAL PAL Fim . :
 
-    :               shift and go to state 98
+    :               shift and go to state 99
 
 
 state 90
 
-    (43) MathPAL -> Math . PAL MathPAL
+    (30) Fim -> ) .
 
-    PAL             shift and go to state 99
+    :               reduce using rule 30 (Fim -> ) .)
+    )               reduce using rule 30 (Fim -> ) .)
+    }               reduce using rule 30 (Fim -> ) .)
 
 
 state 91
 
-    (12) Def -> SIMB PAL { TOKEN , PAL } .
+    (13) Erro -> - PAL SIMB , PAL Fim . )
 
-    SIMB            reduce using rule 12 (Def -> SIMB PAL { TOKEN , PAL } .)
-    _               reduce using rule 12 (Def -> SIMB PAL { TOKEN , PAL } .)
+    )               shift and go to state 100
 
 
 state 92
 
-    (7) ListTokens -> [ TOKEN ListTokens . ]
+    (12) Def -> SIMB PAL { TOKEN , PAL Fim . }
 
-    ]               shift and go to state 100
+    }               shift and go to state 101
 
 
 state 93
 
-    (26) Atr -> PAL [ Atr . ]
+    (7) ListTokens -> [ TOKEN ListTokens . ]
 
-    ]               shift and go to state 101
+    ]               shift and go to state 102
 
 
 state 94
 
+    (26) Atr -> PAL [ Atr . ]
+
+    ]               shift and go to state 103
+
+
+state 95
+
     (28) ListAtr -> Atr . Math ListAtr
-    (30) Math -> . =
-    (31) Math -> . +
-    (32) Math -> . -
-    (33) Math -> . *
-    (34) Math -> . /
-    (35) Math -> . _
-    (36) Math -> . = +
-    (37) Math -> . = -
-    (38) Math -> .
+    (32) Math -> . =
+    (33) Math -> . +
+    (34) Math -> . -
+    (35) Math -> . *
+    (36) Math -> . /
+    (37) Math -> . _
+    (38) Math -> . = +
+    (39) Math -> . = -
+    (40) Math -> .
 
     =               shift and go to state 83
     +               shift and go to state 84
@@ -967,79 +974,74 @@ state 94
     *               shift and go to state 86
     /               shift and go to state 87
     _               shift and go to state 88
-    PAL             reduce using rule 38 (Math -> .)
-    }               reduce using rule 38 (Math -> .)
+    PAL             reduce using rule 40 (Math -> .)
+    )               reduce using rule 40 (Math -> .)
+    }               reduce using rule 40 (Math -> .)
 
-    Math                           shift and go to state 102
-
-state 95
-
-    (25) Id -> Atr Math ListAtr .
-
-    }               reduce using rule 25 (Id -> Atr Math ListAtr .)
-
+    Math                           shift and go to state 104
 
 state 96
 
-    (36) Math -> = + .
+    (25) Id -> Atr Math ListAtr . Fim
+    (30) Fim -> . )
+    (31) Fim -> .
 
-    PAL             reduce using rule 36 (Math -> = + .)
-    }               reduce using rule 36 (Math -> = + .)
+    )               shift and go to state 90
+    }               reduce using rule 31 (Fim -> .)
 
+    Fim                            shift and go to state 105
 
 state 97
 
-    (37) Math -> = - .
+    (38) Math -> = + .
 
-    PAL             reduce using rule 37 (Math -> = - .)
-    }               reduce using rule 37 (Math -> = - .)
+    PAL             reduce using rule 38 (Math -> = + .)
+    )               reduce using rule 38 (Math -> = + .)
+    }               reduce using rule 38 (Math -> = + .)
 
 
 state 98
 
-    (42) DefsCode -> PAL PAL MathPAL : .
+    (39) Math -> = - .
 
-    PAL             reduce using rule 42 (DefsCode -> PAL PAL MathPAL : .)
-    $end            reduce using rule 42 (DefsCode -> PAL PAL MathPAL : .)
+    PAL             reduce using rule 39 (Math -> = - .)
+    )               reduce using rule 39 (Math -> = - .)
+    }               reduce using rule 39 (Math -> = - .)
 
 
 state 99
 
-    (43) MathPAL -> Math PAL . MathPAL
-    (43) MathPAL -> . Math PAL MathPAL
-    (44) MathPAL -> .
-    (30) Math -> . =
-    (31) Math -> . +
-    (32) Math -> . -
-    (33) Math -> . *
-    (34) Math -> . /
-    (35) Math -> . _
-    (36) Math -> . = +
-    (37) Math -> . = -
-    (38) Math -> .
+    (44) DefsCode -> PAL PAL Fim : .
 
-    :               reduce using rule 44 (MathPAL -> .)
-    =               shift and go to state 83
-    +               shift and go to state 84
-    -               shift and go to state 85
-    *               shift and go to state 86
-    /               shift and go to state 87
-    _               shift and go to state 88
-    PAL             reduce using rule 38 (Math -> .)
+    PAL             reduce using rule 44 (DefsCode -> PAL PAL Fim : .)
+    $end            reduce using rule 44 (DefsCode -> PAL PAL Fim : .)
 
-    Math                           shift and go to state 90
-    MathPAL                        shift and go to state 103
 
 state 100
+
+    (13) Erro -> - PAL SIMB , PAL Fim ) .
+
+    %               reduce using rule 13 (Erro -> - PAL SIMB , PAL Fim ) .)
+
+
+state 101
+
+    (12) Def -> SIMB PAL { TOKEN , PAL Fim } .
+
+    SIMB            reduce using rule 12 (Def -> SIMB PAL { TOKEN , PAL Fim } .)
+    -               reduce using rule 12 (Def -> SIMB PAL { TOKEN , PAL Fim } .)
+
+
+state 102
 
     (7) ListTokens -> [ TOKEN ListTokens ] .
 
     SIMB            reduce using rule 7 (ListTokens -> [ TOKEN ListTokens ] .)
-    _               reduce using rule 7 (ListTokens -> [ TOKEN ListTokens ] .)
+    -               reduce using rule 7 (ListTokens -> [ TOKEN ListTokens ] .)
     ]               reduce using rule 7 (ListTokens -> [ TOKEN ListTokens ] .)
 
 
-state 101
+state 103
 
     (26) Atr -> PAL [ Atr ] .
 
@@ -1050,11 +1052,12 @@ state 101
     /               reduce using rule 26 (Atr -> PAL [ Atr ] .)
     _               reduce using rule 26 (Atr -> PAL [ Atr ] .)
     PAL             reduce using rule 26 (Atr -> PAL [ Atr ] .)
+    )               reduce using rule 26 (Atr -> PAL [ Atr ] .)
     }               reduce using rule 26 (Atr -> PAL [ Atr ] .)
     ]               reduce using rule 26 (Atr -> PAL [ Atr ] .)
 
 
-state 102
+state 104
 
     (28) ListAtr -> Atr Math . ListAtr
     (28) ListAtr -> . Atr Math ListAtr
@@ -1062,22 +1065,28 @@ state 102
     (26) Atr -> . PAL [ Atr ]
     (27) Atr -> . PAL
 
+    )               reduce using rule 29 (ListAtr -> .)
     }               reduce using rule 29 (ListAtr -> .)
     PAL             shift and go to state 69
 
-    Atr                            shift and go to state 94
-    ListAtr                        shift and go to state 104
+    Atr                            shift and go to state 95
+    ListAtr                        shift and go to state 106
 
-state 103
+state 105
 
-    (43) MathPAL -> Math PAL MathPAL .
+    (25) Id -> Atr Math ListAtr Fim .
 
-    :               reduce using rule 43 (MathPAL -> Math PAL MathPAL .)
+    }               reduce using rule 25 (Id -> Atr Math ListAtr Fim .)
 
 
-state 104
+state 106
 
     (28) ListAtr -> Atr Math ListAtr .
 
+    )               reduce using rule 28 (ListAtr -> Atr Math ListAtr .)
     }               reduce using rule 28 (ListAtr -> Atr Math ListAtr .)
 
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for ) in state 75 resolved as shift

@@ -8,8 +8,8 @@ def split(palavra):
 
 def p_gramatica(p):
     "Gramatica : Lex Yacc"
-    print(p[1])
-    print(p[2])
+    #print(p[1])
+    #print(p[2])
 
 #LEX
 def p_lex(p):
@@ -52,13 +52,12 @@ def p_defs_empty (p):
     p[0] = ""
 
 def p_def (p):
-    "Def : SIMB PAL '{' TOKEN ',' PAL '}'"
-    p[0] = "def t_" + p[4][1:-1] +"(t):\n\tr"+p[1] +"\n\tt.value = " + p[6]+"\n\t"+p[2] + " t"
+    "Def : SIMB PAL '{' TOKEN ',' PAL Fim '}'"
+    p[0] = "def t_" + p[4][1:-1] +"(t):\n\tr"+p[1] +"\n\tt.value = " + p[6]+p[7]+"\n\t"+p[2] + " t"
 
 def p_erro (p):
-    "Erro : '_' PAL SIMB ',' PAL"
-    p[0] = "def t_error(t):\n\tprint(" + p[3]+")\n\t" + p[5][0:-1]
-
+    "Erro : '-' PAL SIMB ',' PAL Fim ')'"
+    p[0] = "def t_error(t):\n\tprint(" + p[3]+")\n\t" + p[5]+p[6]
 
 #YACC
 def p_yacc (p):
@@ -106,8 +105,8 @@ def p_exp_empty(p):
     p[0] = ""
 
 def p_id_at (p):
-    "Id : Atr Math  ListAtr"
-    p[0] = p[1] + p[2] + p[3]
+    "Id : Atr Math  ListAtr Fim"
+    p[0] = p[1] + p[2] + p[3]+p[4]
 
 def p_atr (p):
     "Atr : PAL '[' Atr ']'"
@@ -123,6 +122,14 @@ def p_listAtr_with_values(p):
 
 def p_listAtr_empty(p):
     "ListAtr : "
+    p[0] = ""
+
+def p_fim(p):
+    "Fim : ')' "
+    p[0] = p[1]
+
+def p_fim_empty(p):
+    "Fim : "
     p[0] = ""
 
 def p_math_one (p):
@@ -161,17 +168,9 @@ def p_listdefscode_empty(p):
     p[0] = ""
 
 def p_DefsCode_(p):
-    "DefsCode : PAL PAL MathPAL ':' "
+    "DefsCode : PAL PAL Fim ':' "
     p[0] = p[1]+" "+p[2]+p[3]+p[4]+"\n"
     print(p[0])
-
-def p_mathPAL(p):
-    "MathPAL : Math PAL MathPAL"
-    p[0]=p[1]+p[2]+p[3]
-
-def p_mathPAL_empty(p):
-    "MathPAL : "
-    p[0]= ""
 
 def p_error(p):
     print('Erro sintático: ', p)

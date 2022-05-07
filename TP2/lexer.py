@@ -4,7 +4,7 @@ tokens = ['PAL','TOKEN','SIMB','PRECEDENCE']
 literals = ['+','-','*','/','=','%','_','[',']',',','{','}','.',':','(',')']
 
 t_ignore = " \t\n"
-t_PAL = r"[A-Za-z\.\(\)0-9]+"
+t_PAL = r"[A-Za-z\.\(\_0-9]+"
 t_TOKEN = r"\'[^\']+\'"
 t_SIMB = r"\"[^\"]+\""
 t_PRECEDENCE = r"\((\'[^\']+\'\,)+(\'[^\']+\')+\)"
