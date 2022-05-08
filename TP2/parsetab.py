@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = "PAL PRECEDENCE SIMB TOKENGramatica : Lex YaccLex : '%' '%' PAL List Defs ErroList : Literals Ignore TokensLiterals : '%' PAL '=' SIMBIgnore : '%' PAL '=' SIMBTokens : '%' PAL '=' ListTokensListTokens : '[' TOKEN ListTokens ']'ListTokens : ',' TOKENListTokens : Defs : Def DefsDefs : Def : SIMB PAL '{' TOKEN ',' PAL Fim '}'Erro : '-' PAL SIMB ',' PAL Fim ')'Yacc : '%' '%' PAL Precedence Gramar CodePrecedence : '%' PAL '=' '[' ListPrecedence ']' ListPrecedence : PRECEDENCE ',' ListPrecedenceListPrecedence : Gramar : Productions GramarGramar :Productions : PAL ':' Exp '{' Id  '}'\n    Exp : PAL Exp\n        | TOKEN Exp\n    Exp : '%' PAL ExpExp :Id : Atr Math  ListAtr FimAtr : PAL '[' Atr ']'Atr : PALListAtr : Atr Math ListAtrListAtr : Fim : ')' Fim : \n    Math : '='\n          | '+'\n          | '-'\n          | '*'\n          | '/'\n          | '_'\n    \n    Math : '=' '+'\n          | '=' '-'\n    Math : Code : '%' '%' ListDefsCode ListDefsCode : DefsCode ListDefsCodeListDefsCode : DefsCode : PAL PAL Fim ':' "
+_lr_signature = "NEWLINE PAL PRECEDENCE SIMB TOKENGramatica : Lex Yacc Lex : '%' '%' PAL ListNewLines List Defs ErroList : Literals Ignore TokensLiterals : '%' PAL '=' SIMB ListNewLinesIgnore : '%' PAL '=' SIMB ListNewLinesTokens : '%' PAL '=' ListTokens ListNewLinesListTokens : '[' TOKEN ListTokens ']'ListTokens : ',' TOKENListTokens : Defs : Def DefsDefs : Def : SIMB PAL '{' TOKEN ',' PAL Fim '}' ListNewLines Erro : '-' PAL SIMB ',' PAL Fim ')' ListNewLinesYacc : '%' '%' PAL ListNewLines Precedence Gramar Code Precedence : '%' PAL '=' '[' ListNewLines ListPrecedence ']' ListNewLinesListPrecedence : PRECEDENCE ',' ListNewLines ListPrecedenceListPrecedence : Gramar : Productions GramarGramar :Productions : PAL ':' Exp '{' Id  '}' ListNewLines\n    Exp : PAL Exp\n        | TOKEN Exp\n    Exp : '%' PAL ExpExp :Id : Atr Math  ListAtr FimAtr : PAL '[' Atr ']'Atr : PALListAtr : Atr Math ListAtrListAtr : Fim : ')' Fim : \n    Math : '='\n          | '+'\n          | '-'\n          | '*'\n          | '/'\n          | '_'\n    ListNewLines : NEWLINE ListNewLinesListNewLines : \n    Math : '=' '+'\n          | '=' '-'\n    Math : Code : '%' '%' ListNewLines ListDefsCode ListDefsCode : DefsCode ListNewLines ListDefsCodeListDefsCode : DefsCode : PAL '=' PAL ')' NEWLINE PAL SIMB ')' ListNewLinesDefsCode : PAL PAL Fim ':' NEWLINE ListLinhaCodeListLinhaCode : LinhaCode ListLinhaCode ListLinhaCode : LinhaCode : ListElem ')' NEWLINEListElem : Elem ListElemListElem : \n    Elem : PAL\n          | TOKEN\n          | SIMB\n          | ':'\n          | ','\n          | '='\n    "
     
-_lr_action_items = {'%':([0,2,3,5,8,9,12,14,19,23,24,26,34,35,37,38,44,46,52,58,67,81,100,],[3,5,6,7,10,13,20,-19,31,35,-19,-2,47,48,-18,-4,47,47,-5,47,-15,-20,-13,]),'$end':([1,4,36,48,59,60,73,99,],[0,-1,-14,-43,-41,-43,-42,-44,]),'PAL':([6,7,10,13,14,18,20,24,27,31,34,44,46,47,48,56,58,60,61,62,63,67,69,71,80,81,82,83,84,85,86,87,88,95,97,98,99,103,104,],[8,9,15,21,22,29,32,22,39,41,44,44,44,58,61,69,44,61,74,75,76,-15,-27,-40,69,-20,69,-32,-33,-34,-35,-36,-37,-40,-38,-39,-44,-26,69,]),'-':([11,16,17,28,30,51,64,69,71,78,83,95,101,102,103,],[-11,27,-11,-10,-3,-9,-6,-27,85,-8,98,85,-12,-7,-26,]),'SIMB':([11,17,25,30,39,42,51,64,78,101,102,],[18,18,38,-3,49,52,-9,-6,-8,-12,-7,]),'=':([15,21,32,41,69,71,95,103,],[25,33,42,51,-27,83,83,-26,]),':':([22,74,89,90,],[34,-31,99,-30,]),'{':([29,34,44,45,46,55,57,58,72,],[40,-24,-24,56,-24,-21,-22,-24,-23,]),'[':([33,51,69,77,],[43,65,80,65,]),'TOKEN':([34,40,44,46,58,65,66,],[46,50,46,46,46,77,78,]),'PRECEDENCE':([43,68,],[54,54,]),']':([43,53,68,69,77,78,79,93,94,102,103,],[-17,67,-17,-27,-9,-8,-16,102,103,-7,-26,]),',':([49,50,51,54,77,],[62,63,66,68,66,]),'+':([69,71,83,95,103,],[-27,84,97,84,-26,]),'*':([69,71,95,103,],[-27,86,86,-26,]),'/':([69,71,95,103,],[-27,87,87,-26,]),'_':([69,71,95,103,],[-27,88,88,-26,]),')':([69,71,74,75,76,82,83,84,85,86,87,88,90,91,95,96,97,98,103,104,106,],[-27,-40,90,90,90,-29,-32,-33,-34,-35,-36,-37,-30,100,-40,90,-38,-39,-26,-29,-28,]),'}':([69,70,71,76,82,83,84,85,86,87,88,90,92,95,96,97,98,103,104,105,106,],[-27,81,-40,-31,-29,-32,-33,-34,-35,-36,-37,-30,101,-40,-31,-38,-39,-26,-29,-25,-28,]),}
+_lr_action_items = {'%':([0,2,3,5,8,9,10,11,12,15,16,18,23,27,28,30,38,39,41,42,48,50,53,57,62,69,84,87,102,105,113,122,],[3,5,6,7,-39,-39,13,-39,17,24,-38,-19,35,39,-19,-2,51,52,-18,-39,51,51,-4,-39,51,-5,-39,-39,-15,-20,-39,-13,]),'$end':([1,4,11,16,40,52,63,76,77,95,110,125,129,130,138,142,143,144,],[0,-1,-39,-38,-14,-39,-45,-43,-39,-45,-44,-49,-47,-49,-48,-50,-39,-46,]),'PAL':([6,7,11,13,16,17,18,22,24,28,31,35,38,48,50,51,52,60,62,63,64,65,72,74,77,78,84,86,87,88,89,90,91,92,93,94,95,97,102,105,106,108,109,117,118,125,126,127,128,129,130,132,133,134,135,136,138,142,143,144,],[8,9,-39,19,-38,25,26,33,36,26,43,45,48,48,48,62,-39,72,48,78,79,80,-27,-42,-39,96,-39,72,-39,72,-32,-33,-34,-35,-36,-37,78,112,-15,-20,-42,-40,-41,-26,72,127,137,-53,-56,-47,127,127,-54,-55,-57,-58,-48,-50,-39,-46,]),'NEWLINE':([8,9,11,16,42,47,52,56,57,66,77,83,84,85,87,113,114,115,120,121,125,129,130,138,139,142,143,144,],[11,11,11,-38,11,11,11,-9,11,11,11,-8,11,11,11,11,11,-7,125,126,-49,-47,-49,-48,142,-50,11,-46,]),'PRECEDENCE':([11,16,47,58,85,103,],[-39,-38,-39,71,-39,71,]),']':([11,16,47,58,70,72,82,83,85,101,103,104,115,116,117,],[-39,-38,-39,-17,84,-27,-9,-8,-39,115,-17,117,-7,-16,-26,]),'SIMB':([11,14,16,21,29,34,43,46,56,66,81,83,114,115,123,125,127,128,130,132,133,134,135,136,137,142,],[-39,22,-38,22,42,-3,54,57,-9,-39,-6,-8,-39,-7,-12,134,-53,-56,134,134,-54,-55,-57,-58,141,-50,]),'-':([11,14,16,20,21,32,34,56,66,72,74,81,83,89,106,114,115,117,123,],[-39,-11,-38,31,-11,-10,-3,-9,-39,-27,91,-6,-8,109,91,-39,-7,-26,-12,]),'=':([19,25,36,45,72,74,78,106,117,125,127,128,130,132,133,134,135,136,142,],[29,37,46,56,-27,89,97,89,-26,136,-53,-56,136,136,-54,-55,-57,-58,-50,]),':':([26,96,99,111,125,127,128,130,132,133,134,135,136,142,],[38,-31,-30,120,128,-53,-56,128,128,-54,-55,-57,-58,-50,]),'{':([33,38,48,49,50,59,61,62,75,],[44,-24,-24,60,-24,-21,-22,-24,-23,]),'[':([37,56,72,82,],[47,67,86,67,]),'TOKEN':([38,44,48,50,62,67,68,125,127,128,130,132,133,134,135,136,142,],[50,55,50,50,50,82,83,133,-53,-56,133,133,-54,-55,-57,-58,-50,]),',':([54,55,56,71,82,125,127,128,130,132,133,134,135,136,142,],[64,65,68,85,68,135,-53,-56,135,135,-54,-55,-57,-58,-50,]),'+':([72,74,89,106,117,],[-27,90,108,90,-26,]),'*':([72,74,106,117,],[-27,92,92,-26,]),'/':([72,74,106,117,],[-27,93,93,-26,]),'_':([72,74,106,117,],[-27,94,94,-26,]),')':([72,74,79,80,88,89,90,91,92,93,94,96,98,99,106,107,108,109,112,117,118,124,125,127,128,130,131,132,133,134,135,136,140,141,142,],[-27,-42,99,99,-29,-32,-33,-34,-35,-36,-37,99,113,-30,-42,99,-40,-41,121,-26,-29,-28,-52,-53,-56,-52,139,-52,-54,-55,-57,-58,-51,143,-50,]),'}':([72,73,74,80,88,89,90,91,92,93,94,99,100,106,107,108,109,117,118,119,124,],[-27,87,-42,-31,-29,-32,-33,-34,-35,-36,-37,-30,114,-42,-31,-40,-41,-26,-29,-25,-28,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'Gramatica':([0,],[1,]),'Lex':([0,],[2,]),'Yacc':([2,],[4,]),'List':([8,],[11,]),'Literals':([8,],[12,]),'Precedence':([9,],[14,]),'Defs':([11,17,],[16,28,]),'Def':([11,17,],[17,17,]),'Ignore':([12,],[19,]),'Gramar':([14,24,],[23,37,]),'Productions':([14,24,],[24,24,]),'Erro':([16,],[26,]),'Tokens':([19,],[30,]),'Code':([23,],[36,]),'Exp':([34,44,46,58,],[45,55,57,72,]),'ListPrecedence':([43,68,],[53,79,]),'ListDefsCode':([48,60,],[59,73,]),'DefsCode':([48,60,],[60,60,]),'ListTokens':([51,77,],[64,93,]),'Id':([56,],[70,]),'Atr':([56,80,82,104,],[71,94,95,95,]),'Math':([71,95,],[82,104,]),'Fim':([74,75,76,96,],[89,91,92,105,]),'ListAtr':([82,104,],[96,106,]),}
+_lr_goto_items = {'Gramatica':([0,],[1,]),'Lex':([0,],[2,]),'Yacc':([2,],[4,]),'ListNewLines':([8,9,11,42,47,52,57,66,77,84,85,87,113,114,143,],[10,12,16,53,58,63,69,81,95,102,103,105,122,123,144,]),'List':([10,],[14,]),'Literals':([10,],[15,]),'Precedence':([12,],[18,]),'Defs':([14,21,],[20,32,]),'Def':([14,21,],[21,21,]),'Ignore':([15,],[23,]),'Gramar':([18,28,],[27,41,]),'Productions':([18,28,],[28,28,]),'Erro':([20,],[30,]),'Tokens':([23,],[34,]),'Code':([27,],[40,]),'Exp':([38,48,50,62,],[49,59,61,75,]),'ListTokens':([56,82,],[66,101,]),'ListPrecedence':([58,103,],[70,116,]),'Id':([60,],[73,]),'Atr':([60,86,88,118,],[74,104,106,106,]),'ListDefsCode':([63,95,],[76,110,]),'DefsCode':([63,95,],[77,77,]),'Math':([74,106,],[88,118,]),'Fim':([79,80,96,107,],[98,100,111,119,]),'ListAtr':([88,118,],[107,124,]),'ListLinhaCode':([125,130,],[129,138,]),'LinhaCode':([125,130,],[130,130,]),'ListElem':([125,130,132,],[131,131,140,]),'Elem':([125,130,132,],[132,132,132,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,48 +27,62 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> Gramatica","S'",1,None,None,None),
-  ('Gramatica -> Lex Yacc','Gramatica',2,'p_gramatica','parser.py',10),
-  ('Lex -> % % PAL List Defs Erro','Lex',6,'p_lex','parser.py',16),
-  ('List -> Literals Ignore Tokens','List',3,'p_list','parser.py',20),
-  ('Literals -> % PAL = SIMB','Literals',4,'p_literals','parser.py',24),
-  ('Ignore -> % PAL = SIMB','Ignore',4,'p_ignore','parser.py',28),
-  ('Tokens -> % PAL = ListTokens','Tokens',4,'p_tokens','parser.py',32),
-  ('ListTokens -> [ TOKEN ListTokens ]','ListTokens',4,'p_listtokens_with_value','parser.py',36),
-  ('ListTokens -> , TOKEN','ListTokens',2,'p_listtokens_one','parser.py',40),
-  ('ListTokens -> <empty>','ListTokens',0,'p_listtokens_empty','parser.py',44),
-  ('Defs -> Def Defs','Defs',2,'p_defs_with_value','parser.py',47),
-  ('Defs -> <empty>','Defs',0,'p_defs_empty','parser.py',51),
-  ('Def -> SIMB PAL { TOKEN , PAL Fim }','Def',8,'p_def','parser.py',55),
-  ('Erro -> - PAL SIMB , PAL Fim )','Erro',7,'p_erro','parser.py',59),
-  ('Yacc -> % % PAL Precedence Gramar Code','Yacc',6,'p_yacc','parser.py',64),
-  ('Precedence -> % PAL = [ ListPrecedence ]','Precedence',6,'p_precedence','parser.py',68),
-  ('ListPrecedence -> PRECEDENCE , ListPrecedence','ListPrecedence',3,'p_listPrecedence_with_value','parser.py',72),
-  ('ListPrecedence -> <empty>','ListPrecedence',0,'p_listPrecedence_empty','parser.py',76),
-  ('Gramar -> Productions Gramar','Gramar',2,'p_gramar_with_values','parser.py',81),
-  ('Gramar -> <empty>','Gramar',0,'p_gramar_empty','parser.py',85),
-  ('Productions -> PAL : Exp { Id }','Productions',6,'p_productions_Productions','parser.py',89),
-  ('Exp -> PAL Exp','Exp',2,'p_exp_with_values','parser.py',94),
-  ('Exp -> TOKEN Exp','Exp',2,'p_exp_with_values','parser.py',95),
-  ('Exp -> % PAL Exp','Exp',3,'p_exp_with_values_P','parser.py',100),
-  ('Exp -> <empty>','Exp',0,'p_exp_empty','parser.py',104),
-  ('Id -> Atr Math ListAtr Fim','Id',4,'p_id_at','parser.py',108),
-  ('Atr -> PAL [ Atr ]','Atr',4,'p_atr','parser.py',112),
-  ('Atr -> PAL','Atr',1,'p_atr_empty','parser.py',116),
-  ('ListAtr -> Atr Math ListAtr','ListAtr',3,'p_listAtr_with_values','parser.py',120),
-  ('ListAtr -> <empty>','ListAtr',0,'p_listAtr_empty','parser.py',124),
-  ('Fim -> )','Fim',1,'p_fim','parser.py',128),
-  ('Fim -> <empty>','Fim',0,'p_fim_empty','parser.py',132),
-  ('Math -> =','Math',1,'p_math_one','parser.py',137),
-  ('Math -> +','Math',1,'p_math_one','parser.py',138),
-  ('Math -> -','Math',1,'p_math_one','parser.py',139),
-  ('Math -> *','Math',1,'p_math_one','parser.py',140),
-  ('Math -> /','Math',1,'p_math_one','parser.py',141),
-  ('Math -> _','Math',1,'p_math_one','parser.py',142),
-  ('Math -> = +','Math',2,'p_math_two','parser.py',148),
-  ('Math -> = -','Math',2,'p_math_two','parser.py',149),
-  ('Math -> <empty>','Math',0,'p_math_empty','parser.py',154),
-  ('Code -> % % ListDefsCode','Code',3,'p_code','parser.py',159),
-  ('ListDefsCode -> DefsCode ListDefsCode','ListDefsCode',2,'p_listdefscode_with_value','parser.py',163),
-  ('ListDefsCode -> <empty>','ListDefsCode',0,'p_listdefscode_empty','parser.py',167),
-  ('DefsCode -> PAL PAL Fim :','DefsCode',4,'p_DefsCode_','parser.py',171),
+  ('Gramatica -> Lex Yacc','Gramatica',2,'p_gramatica','parser.py',11),
+  ('Lex -> % % PAL ListNewLines List Defs Erro','Lex',7,'p_lex','parser.py',17),
+  ('List -> Literals Ignore Tokens','List',3,'p_list','parser.py',21),
+  ('Literals -> % PAL = SIMB ListNewLines','Literals',5,'p_literals','parser.py',25),
+  ('Ignore -> % PAL = SIMB ListNewLines','Ignore',5,'p_ignore','parser.py',29),
+  ('Tokens -> % PAL = ListTokens ListNewLines','Tokens',5,'p_tokens','parser.py',33),
+  ('ListTokens -> [ TOKEN ListTokens ]','ListTokens',4,'p_listtokens_with_value','parser.py',37),
+  ('ListTokens -> , TOKEN','ListTokens',2,'p_listtokens_one','parser.py',41),
+  ('ListTokens -> <empty>','ListTokens',0,'p_listtokens_empty','parser.py',45),
+  ('Defs -> Def Defs','Defs',2,'p_defs_with_value','parser.py',48),
+  ('Defs -> <empty>','Defs',0,'p_defs_empty','parser.py',52),
+  ('Def -> SIMB PAL { TOKEN , PAL Fim } ListNewLines','Def',9,'p_def','parser.py',56),
+  ('Erro -> - PAL SIMB , PAL Fim ) ListNewLines','Erro',8,'p_erro','parser.py',60),
+  ('Yacc -> % % PAL ListNewLines Precedence Gramar Code','Yacc',7,'p_yacc','parser.py',66),
+  ('Precedence -> % PAL = [ ListNewLines ListPrecedence ] ListNewLines','Precedence',8,'p_precedence','parser.py',70),
+  ('ListPrecedence -> PRECEDENCE , ListNewLines ListPrecedence','ListPrecedence',4,'p_listPrecedence_with_value','parser.py',74),
+  ('ListPrecedence -> <empty>','ListPrecedence',0,'p_listPrecedence_empty','parser.py',78),
+  ('Gramar -> Productions Gramar','Gramar',2,'p_gramar_with_values','parser.py',82),
+  ('Gramar -> <empty>','Gramar',0,'p_gramar_empty','parser.py',86),
+  ('Productions -> PAL : Exp { Id } ListNewLines','Productions',7,'p_productions_Productions','parser.py',90),
+  ('Exp -> PAL Exp','Exp',2,'p_exp_with_values','parser.py',95),
+  ('Exp -> TOKEN Exp','Exp',2,'p_exp_with_values','parser.py',96),
+  ('Exp -> % PAL Exp','Exp',3,'p_exp_with_values_P','parser.py',101),
+  ('Exp -> <empty>','Exp',0,'p_exp_empty','parser.py',105),
+  ('Id -> Atr Math ListAtr Fim','Id',4,'p_id_at','parser.py',109),
+  ('Atr -> PAL [ Atr ]','Atr',4,'p_atr','parser.py',113),
+  ('Atr -> PAL','Atr',1,'p_atr_empty','parser.py',117),
+  ('ListAtr -> Atr Math ListAtr','ListAtr',3,'p_listAtr_with_values','parser.py',121),
+  ('ListAtr -> <empty>','ListAtr',0,'p_listAtr_empty','parser.py',125),
+  ('Fim -> )','Fim',1,'p_fim','parser.py',129),
+  ('Fim -> <empty>','Fim',0,'p_fim_empty','parser.py',133),
+  ('Math -> =','Math',1,'p_math_one','parser.py',138),
+  ('Math -> +','Math',1,'p_math_one','parser.py',139),
+  ('Math -> -','Math',1,'p_math_one','parser.py',140),
+  ('Math -> *','Math',1,'p_math_one','parser.py',141),
+  ('Math -> /','Math',1,'p_math_one','parser.py',142),
+  ('Math -> _','Math',1,'p_math_one','parser.py',143),
+  ('ListNewLines -> NEWLINE ListNewLines','ListNewLines',2,'p_list_newlines_with_value','parser.py',148),
+  ('ListNewLines -> <empty>','ListNewLines',0,'p_list_newline_empty','parser.py',151),
+  ('Math -> = +','Math',2,'p_math_two','parser.py',155),
+  ('Math -> = -','Math',2,'p_math_two','parser.py',156),
+  ('Math -> <empty>','Math',0,'p_math_empty','parser.py',161),
+  ('Code -> % % ListNewLines ListDefsCode','Code',4,'p_code','parser.py',165),
+  ('ListDefsCode -> DefsCode ListNewLines ListDefsCode','ListDefsCode',3,'p_listdefscode_with_value','parser.py',170),
+  ('ListDefsCode -> <empty>','ListDefsCode',0,'p_listdefscode_empty','parser.py',174),
+  ('DefsCode -> PAL = PAL ) NEWLINE PAL SIMB ) ListNewLines','DefsCode',9,'p_DefsCode_Parser','parser.py',178),
+  ('DefsCode -> PAL PAL Fim : NEWLINE ListLinhaCode','DefsCode',6,'p_DefsCode','parser.py',181),
+  ('ListLinhaCode -> LinhaCode ListLinhaCode','ListLinhaCode',2,'p_listLinhaCode_with_value','parser.py',185),
+  ('ListLinhaCode -> <empty>','ListLinhaCode',0,'p_listLinhaCode_empty','parser.py',189),
+  ('LinhaCode -> ListElem ) NEWLINE','LinhaCode',3,'p_linhaCode_with_value','parser.py',193),
+  ('ListElem -> Elem ListElem','ListElem',2,'p_ListElem_with_value','parser.py',197),
+  ('ListElem -> <empty>','ListElem',0,'p_ListElem_empty','parser.py',201),
+  ('Elem -> PAL','Elem',1,'p_elem','parser.py',206),
+  ('Elem -> TOKEN','Elem',1,'p_elem','parser.py',207),
+  ('Elem -> SIMB','Elem',1,'p_elem','parser.py',208),
+  ('Elem -> :','Elem',1,'p_elem','parser.py',209),
+  ('Elem -> ,','Elem',1,'p_elem','parser.py',210),
+  ('Elem -> =','Elem',1,'p_elem','parser.py',211),
 ]
